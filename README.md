@@ -1,17 +1,13 @@
-# OmniAuth::OpenIDConnect
+# OmniAuth::Tara
 
-Originally was [omniauth-openid-connect](https://github.com/jjbohn/omniauth-openid-connect)
-
-I've forked this repository and launch as separate gem because maintaining of original was dropped.
-
-[![Build Status](https://github.com/omniauth/omniauth_openid_connect/actions/workflows/main.yml/badge.svg)](https://github.com/omniauth/omniauth_openid_connect/actions/workflows/main.yml)
-[![Coverage Status](https://coveralls.io/repos/github/omniauth/omniauth_openid_connect/badge.svg)](https://coveralls.io/github/omniauth/omniauth_openid_connect)
+Originally based on [omniauth_openid_connect](https://github.com/jjbohn/omniauth-openid-connect),
+with parts rewritten to fit TARA-Doku protocol.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'omniauth_openid_connect'
+    gem 'omniauth-tara'
 
 And then execute:
 
@@ -19,7 +15,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install omniauth_openid_connect
+    $ gem install omniauth-tara
 
 ## Supported Ruby Versions
 
@@ -31,28 +27,8 @@ Example configuration
 
 ```ruby
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :openid_connect, {
-    name: :my_provider,
-    scope: [:openid, :email, :profile, :address],
-    response_type: :code,
-    uid_field: "preferred_username",
-    client_options: {
-      port: 443,
-      scheme: "https",
-      host: "myprovider.com",
-      identifier: ENV["OP_CLIENT_ID"],
-      secret: ENV["OP_SECRET_KEY"],
-      redirect_uri: "http://myapp.com/users/auth/openid_connect/callback",
-    },
-  }
-end
-```
-
-### with Devise
-```ruby
-Devise.setup do |config|
-  config.omniauth :openid_connect, {
-    name: :my_provider,
+  provider :tara, {
+    name: :myprovider,
     scope: [:openid, :email, :profile, :address],
     response_type: :code,
     uid_field: "preferred_username",
@@ -117,14 +93,12 @@ These are the configuration options for the client_options hash of the configura
   * `name` is arbitrary, I recommend using the name of your provider. The name
   configuration exists because you could be using multiple OpenID Connect
   providers in a single app.
-
-  **NOTE**: if you use this gem with Devise you should use `:openid_connect` name,
-  or Devise would route to 'users/auth/:provider' rather than 'users/auth/openid_connect'
-
-  * `response_type` tells the authorization server which grant type the application wants to use,
-  currently, only `:code` (Authorization Code grant) and `:id_token` (Implicit grant) are valid.
-  * If you want to pass `state` parameter by yourself. You can set Proc Object.
-  e.g. `state: Proc.new { SecureRandom.hex(32) }`
+  * Although `response_type` is an available option, currently, only `:code`
+  is valid. There are plans to bring in implicit flow and hybrid flow at some
+  point, but it hasn't come up yet for me. Those flows aren't best practive for
+  server side web apps anyway and are designed more for native/mobile apps.
+  * If you want to pass `state` paramete by yourself. You can set Proc Object.
+  e.g. `state: Proc.new{ SecureRandom.hex(32) }`
   * `nonce` is optional. If don't want to pass "nonce" parameter to provider, You should specify
   `false` to `send_nonce` option. (default true)
   * Support for other client authentication methods. If don't specified
@@ -152,12 +126,3 @@ These are the configuration options for the client_options hash of the configura
 
 For the full low down on OpenID Connect, please check out
 [the spec](http://openid.net/specs/openid-connect-core-1_0.html).
-
-## Contributing
-
-1. Fork it ( http://github.com/omniauth/omniauth_openid_connect/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Cover your changes with tests and make sure they're green (`bundle install && bundle exec rake test`)
-4. Commit your changes (`git commit -am 'Add some feature'`)
-5. Push to the branch (`git push origin my-new-feature`)
-6. Create new Pull Request
