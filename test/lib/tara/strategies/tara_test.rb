@@ -4,7 +4,7 @@ require_relative '../../../test_helper'
 
 module OmniAuth
   module Strategies
-    class OpenIDConnectTest < StrategyTestCase # rubocop:disable Metrics/ClassLength
+    class TaraTest < StrategyTestCase
       def test_client_options_defaults
         assert_equal 'https', strategy.options.client_options.scheme
         assert_equal 443, strategy.options.client_options.port
@@ -37,8 +37,8 @@ module OmniAuth
         config.stubs(:end_session_endpoint).returns('https://example.com/logout')
         ::OpenIDConnect::Discovery::Provider::Config.stubs(:discover!).with('https://example.com/').returns(config)
 
-        request.stubs(:path_info).returns('/auth/openid_connect/logout')
-        request.stubs(:path).returns('/auth/openid_connect/logout')
+        request.stubs(:path_info).returns('/auth/tara/logout')
+        request.stubs(:path).returns('/auth/tara/logout')
 
         strategy.expects(:redirect).with(regexp_matches(expected_redirect))
         strategy.other_phase
@@ -62,8 +62,8 @@ module OmniAuth
         config.stubs(:end_session_endpoint).returns('https://example.com/logout')
         ::OpenIDConnect::Discovery::Provider::Config.stubs(:discover!).with('https://example.com/').returns(config)
 
-        request.stubs(:path_info).returns('/auth/openid_connect/logout')
-        request.stubs(:path).returns('/auth/openid_connect/logout')
+        request.stubs(:path_info).returns('/auth/tara/logout')
+        request.stubs(:path).returns('/auth/tara/logout')
 
         strategy.expects(:redirect).with(expected_redirect)
         strategy.other_phase
@@ -74,7 +74,7 @@ module OmniAuth
         strategy.options.client_options.host = 'example.com'
         strategy.options.logout_path = '/sign_out'
 
-        request.stubs(:path).returns('/auth/openid_connect/sign_out')
+        request.stubs(:path).returns('/auth/tara/sign_out')
 
         strategy.expects(:call_app!)
         strategy.other_phase
@@ -84,7 +84,7 @@ module OmniAuth
         strategy.options.issuer = 'example.com'
         strategy.options.client_options.host = 'example.com'
 
-        request.stubs(:path).returns('/auth/openid_connect/logout')
+        request.stubs(:path).returns('/auth/tara/logout')
 
         strategy.expects(:call_app!)
         strategy.other_phase

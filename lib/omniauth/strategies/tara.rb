@@ -10,18 +10,17 @@ require 'forwardable'
 
 module OmniAuth
   module Strategies
-    class OpenIDConnect # rubocop:disable Metrics/ClassLength
+    class Tara
       include OmniAuth::Strategy
       extend Forwardable
 
       RESPONSE_TYPE_EXCEPTIONS = {
-        'id_token' => { exception_class: OmniAuth::OpenIDConnect::MissingIdTokenError, key: :missing_id_token }.freeze,
-        'code' => { exception_class: OmniAuth::OpenIDConnect::MissingCodeError, key: :missing_code }.freeze,
+        'code' => { exception_class: OmniAuth::Tara::MissingCodeError, key: :missing_code }.freeze,
       }.freeze
 
       def_delegator :request, :params
 
-      option :name, 'openid_connect'
+      option :name, 'tara'
       option(:client_options, identifier: nil,
                               secret: nil,
                               redirect_uri: nil,
@@ -41,7 +40,7 @@ module OmniAuth
       option :client_jwk_signing_key
       option :client_x509_signing_key
       option :scope, [:openid]
-      option :response_type, 'code' # ['code', 'id_token']
+      option :response_type, 'code'
       option :require_state, true
       option :state
       option :response_mode # [:query, :fragment, :form_post, :web_message]
@@ -79,13 +78,9 @@ module OmniAuth
           name: user_info.name,
           email: user_info.email,
           email_verified: user_info.email_verified,
-          nickname: user_info.preferred_username,
           first_name: user_info.given_name,
           last_name: user_info.family_name,
-          gender: user_info.gender,
-          image: user_info.picture,
           phone: user_info.phone_number,
-          urls: { website: user_info.website },
         }
       end
 
@@ -129,12 +124,8 @@ module OmniAuth
 
         options.issuer = issuer if options.issuer.nil? || options.issuer.empty?
 
-        verify_id_token!(params['id_token']) if configured_response_type == 'id_token'
         discover!
         client.redirect_uri = redirect_uri
-
-        return id_token_callback_phase if configured_response_type == 'id_token'
-
         client.authorization_code = authorization_code
         access_token
         super
@@ -437,17 +428,6 @@ module OmniAuth
         @logout_path_pattern ||= /\A#{Regexp.quote(request_path)}#{options.logout_path}/
       end
 
-      def id_token_callback_phase
-        user_data = decode_id_token(params['id_token']).raw_attributes
-        env['omniauth.auth'] = AuthHash.new(
-          provider: name,
-          uid: user_data['sub'],
-          info: { name: user_data['name'], email: user_data['email'] },
-          extra: { raw_info: user_data }
-        )
-        call_app!
-      end
-
       def valid_response_type?
         return true if params.key?(configured_response_type)
 
@@ -487,4 +467,4 @@ module OmniAuth
   end
 end
 
-OmniAuth.config.add_camelization 'openid_connect', 'OpenIDConnect'
+OmniAuth.config.add_camelization 'tara', 'Tara'
