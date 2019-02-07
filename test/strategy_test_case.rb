@@ -63,14 +63,9 @@ class StrategyTestCase < MiniTest::Test
       name: Faker::Name.name,
       email: Faker::Internet.email,
       email_verified: Faker::Boolean.boolean,
-      nickname: Faker::Name.first_name,
-      preferred_username: Faker::Internet.user_name,
       given_name: Faker::Name.first_name,
       family_name: Faker::Name.last_name,
-      gender: 'female',
-      picture: "#{Faker::Internet.url}.png",
       phone_number: Faker::PhoneNumber.phone_number,
-      website: Faker::Internet.url
     )
   end
 

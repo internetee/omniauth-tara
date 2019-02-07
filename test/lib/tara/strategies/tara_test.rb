@@ -208,7 +208,7 @@ module OmniAuth
         access_token.stubs(:scope)
         access_token.stubs(:id_token).returns(jwt.to_s)
         client.expects(:access_token!).at_least_once.returns(access_token)
-        access_token.expects(:userinfo!).returns(user_info)
+        OmniAuth::Tara::UserInfo.expects(:new).returns(user_info)
 
         id_token = stub('OpenIDConnect::ResponseObject::IdToken')
         id_token.stubs(:raw_attributes).returns('sub' => 'sub', 'name' => 'name', 'email' => 'email')
