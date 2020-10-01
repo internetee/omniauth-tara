@@ -25,6 +25,7 @@ Example configuration
 ```ruby
 provider :tara, {
   name: :myprovider,
+  callback_path: '/registrar/open_id/callback',
   scope: [:openid, :email, :profile, :address],
   response_type: :code,
   client_options: {
@@ -42,6 +43,9 @@ Configuration details:
   * `name` is arbitrary, I recommend using the name of your provider. The name
   configuration exists because you could be using multiple OpenID Connect
   providers in a single app.
+  * `callback_path` is mandatory if your application callback path differs from standard 
+  `/auth/tara/callbacks`, or omniauth gem wouldn`t be able to initiate callback phase
+  after request phase.   
   * Although `response_type` is an available option, currently, only `:code`
   is valid. There are plans to bring in implicit flow and hybrid flow at some
   point, but it hasn't come up yet for me. Those flows aren't best practive for
