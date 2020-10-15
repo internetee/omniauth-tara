@@ -88,10 +88,11 @@ module OmniAuth
 
       def callback_phase
         error = params['error_reason'] || params['error']
+
         if error
           raise CallbackError.new(params['error'], params['error_description'] || params['error_reason'], params['error_uri'])
         elsif params['state'].to_s.empty? || params['state'] != stored_state
-          return Rack::Response.new(['401 Unauthorized'], 401).finish
+          return Rack::Response.new(["Failed! State params: '#{params['state']}' | '#{session['omniauth.state']}'"], 401).finish
         elsif !params['code']
           return fail!(:missing_code, OmniAuth::Tara::MissingCodeError.new(params['error']))
         else
