@@ -21,10 +21,10 @@ module OmniAuth
         scheme: 'https',
         host: nil,
         port: 443,
-        authorization_endpoint: '/authorize',
-        token_endpoint: '/token',
-        userinfo_endpoint: '/userinfo',
-        jwks_uri: '/jwk',
+        authorization_endpoint: '/oidc/authorize',
+        token_endpoint: '/oidc/token',
+        userinfo_endpoint: '/oidc/userinfo',
+        jwks_uri: '/oidc/jwk',
         end_session_endpoint: nil
       }
       option :issuer
