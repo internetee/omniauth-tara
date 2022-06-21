@@ -5,6 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'omniauth/tara/version'
 
 Gem::Specification.new do |spec|
+  spec.required_ruby_version = '>= 2.5'
   spec.name          = 'omniauth-tara'
   spec.version       = OmniAuth::Tara::VERSION
   spec.authors       = ['Artur Beljajev', 'Maciej Szlosarczyk', 'Sergei Tsõganov']
@@ -13,19 +14,13 @@ Gem::Specification.new do |spec|
   spec.description   = 'OpenID Connect Strategy for Tara.'
   spec.homepage      = 'https://github.com/internetee/omniauth-tara'
   spec.license       = 'MIT/X11'
+
   spec.files         = `git ls-files -z`.split("\x0")
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.metadata = {
-    'bug_tracker_uri' => 'https://github.com/m0n9oose/omniauth_openid_connect/issues',
-    'changelog_uri' => 'https://github.com/m0n9oose/omniauth_openid_connect/releases',
-    'documentation_uri' => "https://github.com/m0n9oose/omniauth_openid_connect/tree/v#{spec.version}#readme",
-    'source_code_uri' => "https://github.com/m0n9oose/omniauth_openid_connect/tree/v#{spec.version}",
-    'rubygems_mfa_required' => 'true',
-  }
-
+  spec.add_development_dependency 'bundler', '~> 1.5'
   spec.add_dependency 'omniauth', '>= 1.9', '< 3'
   spec.add_dependency 'openid_connect', '~> 2.2'
   spec.add_development_dependency 'faker', '~> 2.0'
@@ -39,4 +34,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov', '~> 0.21'
   spec.add_development_dependency 'simplecov-lcov', '~> 0.8'
   spec.add_development_dependency 'webmock', '~> 3.18'
+  spec.add_dependency 'addressable', '~> 2.5'
+  spec.add_development_dependency 'coveralls', '~> 0.8'
+  spec.add_development_dependency 'pry', '~> 0.9'
+  spec.add_development_dependency 'rake', '~> 12.0'
 end
