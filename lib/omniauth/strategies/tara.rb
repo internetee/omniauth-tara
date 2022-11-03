@@ -8,7 +8,7 @@ require 'forwardable'
 
 module OmniAuth
   module Strategies
-    class Tara
+    class Tara # rubocop:disable Metrics/ClassLength
       include OmniAuth::Strategy
       extend Forwardable
 
