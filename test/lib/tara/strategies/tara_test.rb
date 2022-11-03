@@ -4,7 +4,7 @@ require_relative '../../../test_helper'
 
 module OmniAuth
   module Strategies
-    class TaraTest < StrategyTestCase
+    class TaraTest < StrategyTestCase # rubocop:disable Metrics/ClassLength
       def test_client_options_defaults
         assert_equal 'https', strategy.options.client_options.scheme
         assert_equal 443, strategy.options.client_options.port
@@ -127,28 +127,6 @@ module OmniAuth
         assert_nil strategy.options.client_options.end_session_endpoint
       end
 
-      def test_request_phase_with_response_mode
-        expected_redirect = %r{^https://example\.com/authorize\?client_id=1234&nonce=\w{32}&response_mode=form_post&response_type=id_token&scope=openid&state=\w{32}$}
-        strategy.options.issuer = 'example.com'
-        strategy.options.response_mode = 'form_post'
-        strategy.options.response_type = 'id_token'
-        strategy.options.client_options.host = 'example.com'
-
-        strategy.expects(:redirect).with(regexp_matches(expected_redirect))
-        strategy.request_phase
-      end
-
-      def test_request_phase_with_response_mode_symbol
-        expected_redirect = %r{^https://example\.com/authorize\?client_id=1234&nonce=\w{32}&response_mode=form_post&response_type=id_token&scope=openid&state=\w{32}$}
-        strategy.options.issuer = 'example.com'
-        strategy.options.response_mode = 'form_post'
-        strategy.options.response_type = :id_token
-        strategy.options.client_options.host = 'example.com'
-
-        strategy.expects(:redirect).with(regexp_matches(expected_redirect))
-        strategy.request_phase
-      end
-
       def test_option_acr_values
         strategy.options.client_options[:host] = 'foobar.com'
 
@@ -208,7 +186,6 @@ module OmniAuth
         access_token.stubs(:scope)
         access_token.stubs(:id_token).returns(jwt.to_s)
         client.expects(:access_token!).at_least_once.returns(access_token)
-        id_token.stubs(:raw_attributes).returns(id_token_raw_attributes)
         OmniAuth::Tara::UserInfo.expects(:new).returns(user_info)
 
         id_token = stub('OpenIDConnect::ResponseObject::IdToken')
@@ -676,6 +653,22 @@ module OmniAuth
         strategy.callback_phase
       end
 
+      def test_callback_phase_with_rack_oauth2_client_error
+        code = SecureRandom.hex(16)
+        state = SecureRandom.hex(16)
+        nonce = SecureRandom.hex(16)
+        request.stubs(:params).returns('code' => code, 'state' => state)
+        request.stubs(:path).returns('')
+
+        strategy.options.issuer = 'example.com'
+
+        strategy.stubs(:access_token).raises(::Rack::OAuth2::Client::Error.new('error', error: 'Unknown'))
+        strategy.call!('rack.session' => { 'omniauth.state' => state, 'omniauth.nonce' => nonce })
+        strategy.expects(:fail!)
+
+        strategy.callback_phase
+      end
+
       def test_info
         info = strategy.info
         assert_equal user_info.name, info[:name]
@@ -686,7 +679,7 @@ module OmniAuth
       end
 
       def test_extra
-        expected_result = {:raw_info => id_token_raw_attributes }
+        expected_result = { raw_info: id_token_raw_attributes }
         assert_equal(expected_result, strategy.extra)
       end
 
@@ -744,7 +737,6 @@ module OmniAuth
 
       def test_state
         strategy.options.state = -> { 42 }
-
         expected_redirect = /&state=42/
         strategy.options.issuer = 'example.com'
         strategy.options.client_options.host = 'example.com'
@@ -759,7 +751,6 @@ module OmniAuth
         code = SecureRandom.hex(16)
         request.stubs(:params).returns('code' => code, 'state' => 43)
         request.stubs(:path).returns('')
-
         strategy.call!('rack.session' => session)
         strategy.expects(:fail!)
         strategy.callback_phase

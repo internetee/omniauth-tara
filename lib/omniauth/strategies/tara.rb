@@ -229,8 +229,8 @@ module OmniAuth
       end
 
       def issuer
-        resource = "#{ client_options.scheme }://#{ client_options.host }"
-        resource = "#{ resource }:#{ client_options.port }" if client_options.port
+        resource = "#{client_options.scheme}://#{client_options.host}"
+        resource = "#{resource}:#{client_options.port}" if client_options.port
         ::OpenIDConnect::Discovery::Provider.discover!(resource).issuer
       end
 
@@ -447,6 +447,27 @@ module OmniAuth
         decode_id_token(id_token).verify!(issuer: options.issuer,
                                           client_id: client_options.identifier,
                                           nonce: params['nonce'].presence || stored_nonce)
+      end
+
+      def valid_response_type?
+        return true if params.key?(configured_response_type)
+
+        error_attrs = RESPONSE_TYPE_EXCEPTIONS[configured_response_type]
+        fail!(error_attrs[:key], error_attrs[:exception_class].new(params['error']))
+
+        false
+      end
+
+      def configured_response_type
+        @configured_response_type ||= options.response_type.to_s
+      end
+
+      def verify_id_token!(id_token)
+        return unless id_token
+
+        decode_id_token(id_token).verify!(issuer: options.issuer,
+                                          client_id: client_options.identifier,
+                                          nonce: stored_nonce)
       end
 
       class CallbackError < StandardError

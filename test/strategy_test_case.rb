@@ -80,21 +80,23 @@ class StrategyTestCase < MiniTest::Test
     end
   end
 
+  # rubocop:disable Style/StringLiterals
   def id_token_raw_attributes
     { "jti" => "1109a229-feb0-479a-94ee-75640dd6bb0c",
       "iss" => "https://tara-test.ria.ee",
       "aud" => "registreerija",
-      "exp" => 1549574273,
-      "iat" => 1549545473,
-      "nbf" => 1549545173,
+      "exp" => 154_957_427_3,
+      "iat" => 154_954_547_3,
+      "nbf" => 154_954_517_3,
       "sub" => "EE10101010005",
-      "profile_attributes" => {"date_of_birth" => "1801-01-01",
-                               "family_name" => "SMART-ID", "given_name" => "DEMO"},
+      "profile_attributes" => { "date_of_birth" => "1801-01-01",
+                                "family_name" => "SMART-ID", "given_name" => "DEMO" },
       "amr" => ["smartid"],
       "state" => "732cfcb126baf71c2fb9",
       "nonce" => "0f8eb2960d02c2f7655f0f9c016ad9ab",
       "at_hash" => "zx8E40ccsJM133gRg5V/3g==" }
   end
+  # rubocop:enable Style/StringLiterals
 
   def strategy
     @strategy ||= OmniAuth::Strategies::Tara.new(DummyApp.new).tap do |strategy|
