@@ -2,6 +2,6 @@
 
 module OmniAuth
   module Tara
-    VERSION = '0.4.0'
+    VERSION = '0.7.1'
   end
 end

@@ -5,6 +5,7 @@ require 'minitest/autorun'
 require 'mocha/minitest'
 require 'faker'
 require 'active_support'
+require 'webmock/minitest'
 
 SimpleCov.start do
   if ENV['CI']
@@ -23,5 +24,4 @@ lib = File.expand_path('../lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'omniauth_tara'
 require_relative 'strategy_test_case'
-
 OmniAuth.config.test_mode = true

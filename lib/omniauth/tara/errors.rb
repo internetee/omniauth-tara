@@ -5,5 +5,7 @@ module OmniAuth
     class Error < RuntimeError; end
 
     class MissingCodeError < Error; end
+
+    class MissingIdTokenError < Error; end
   end
 end

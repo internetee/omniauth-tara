@@ -2,38 +2,44 @@ require 'openid_connect'
 
 module OmniAuth
   module Tara
-    class UserInfo
-      attr_reader :id_token, :public_key
+    class UserInfo < OpenIDConnect::ConnectObject
+      attr_optional(
+        :sub,
+        :name,
+        :nickname,
+        :preferred_username,
+        :profile,
+        :locale,
+        :email,
+        :email_verified,
+        :phone_number,
+        :phone_number_verified,
+        :profile_attributes,
+      )
+      alias subject sub
+      alias subject= sub=
 
-      def initialize(id_token, public_key)
-        @id_token = id_token
-        @public_key = public_key
-      end
+      validates :email_verified, :phone_number_verified, allow_nil: true, inclusion: { in: [true, false] }
+      validates :email,                                  allow_nil: true, email: true
+      validate :require_at_least_one_attributes
 
-      def decoded_id_token
-        @decoded_id_token ||= ::OpenIDConnect::ResponseObject::IdToken.decode(
-          id_token, public_key
-        )
-      end
-
-      def raw_attributes
-        decoded_id_token.raw_attributes
-      end
-
-      def sub
-        raw_attributes['sub']
+      def initialize(attributes = {})
+        super
+        (all_attributes - %i[email_verified phone_number_verified profile_attributes]).each do |key|
+          send "#{key}=", send(key).try(:to_s)
+        end
       end
 
       def given_name
         raw_attributes.dig('profile_attributes', 'given_name')
       end
 
-      def last_name
+      def family_name
         raw_attributes.dig('profile_attributes', 'family_name')
       end
 
-      def name
-        sub
+      def birthdate
+        raw_attributes.dig('profile_attributes', 'date_of_birth')
       end
     end
   end

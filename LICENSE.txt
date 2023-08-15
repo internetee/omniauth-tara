@@ -1,4 +1,4 @@
-Copyright (c) 2019 Estonian Internet Foundation
+Copyright (c) 2023 Estonian Internet Foundation
 Copyright (c) 2014 John Bohn
 
 The MIT/X11 License (MIT/X11)
