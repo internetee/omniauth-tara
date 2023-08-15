@@ -28,7 +28,7 @@ jobs:
           bundler-cache: true
       - name: config bundler
         run:  |
-          bundle config set without 'staging production'
+          bundle config set without 'development staging production'
           bundle config set deployment '[secure]'
           bundle env
           head -n1 $(which bundle)
@@ -36,12 +36,13 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          COVERAGE: true
           DISABLE_SPRING: 1
         run: |
           gem install bundler -v '>= 2.2.10'
           gem install simplecov -v '~> 0.21'
           gem install builder
+          gem install omniauth -v '>= 1.9'
+          gem install openid_connect -v '~> 2.2'
           gem install webmock
           gem install mocha
           gem install faker
