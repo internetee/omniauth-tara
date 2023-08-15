@@ -27,24 +27,8 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
 
-      - name: Config bundler
-        run:  |
-          bundle config set without 'development staging production'
-          bundle config set deployment '[secure]'
-          bundle env
-          head -n1 $(which bundle)
-
       - name: Run tests
-        run: |
-          gem install bundler -v '>= 2.2.10'
-          gem install simplecov -v '~> 0.21'
-          gem install builder
-          gem install webmock
-          gem install minitest
-          gem install mocha
-          gem install faker
-          bundle install
-          rake
+        run: bundle exec rake
 
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
