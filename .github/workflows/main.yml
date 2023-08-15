@@ -45,7 +45,7 @@ jobs:
           gem install webmock
           gem install mocha
           gem install faker
-          gem install minitest -v '~> 5.8', '>= 5.8.4'
+          gem install minitest
           bundle install
           rake
 
