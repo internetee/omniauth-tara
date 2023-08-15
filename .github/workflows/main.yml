@@ -42,6 +42,7 @@ jobs:
           gem install webmock
           gem install minitest
           gem install mocha
+          gem install faker
           bundle install
           rake
 
