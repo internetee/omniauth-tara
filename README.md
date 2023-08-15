@@ -3,7 +3,7 @@
 Originally based on [omniauth_openid_connect](https://github.com/omniauth/omniauth_openid_connect),
 with parts rewritten to fit TARA-Doku protocol.
 
-[![Build Status](https://github.com/internetee/omniauth-tara/actions/workflows/main.yml/badge.svg)](https://github.com/omniauth/omniauth_openid_connect/actions/workflows/main.yml)
+[![Build Status](https://github.com/internetee/omniauth-tara/actions/workflows/main.yml/badge.svg)](https://github.com/internetee/omniauth-tara/actions/workflows/main.yml)
 [![Coverage Status](https://coveralls.io/repos/github/internetee/omniauth-tara/badge.svg)](https://coveralls.io/github/internetee/omniauth-tara)
 
 ## Installation
