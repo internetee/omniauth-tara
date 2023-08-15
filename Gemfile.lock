@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    omniauth_openid_connect (0.7.1)
+    omniauth-tara (0.7.1)
       omniauth (>= 1.9, < 3)
       openid_connect (~> 2.2)
 
@@ -199,7 +199,7 @@ DEPENDENCIES
   net-imap
   net-pop
   net-smtp
-  omniauth_openid_connect!
+  omniauth-tara!
   rake (~> 12.0)
   rubocop (~> 1.12)
   simplecov (~> 0.21)
