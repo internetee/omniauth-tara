@@ -8,10 +8,12 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.7'
   spec.name          = 'omniauth-tara'
   spec.version       = OmniAuth::Tara::VERSION
-  spec.authors       = ['John Bohn', 'Ilya Shcherbinin', 'Artur Beljajev', 'Maciej Szlosarczyk',
-    'Sergei Tsõganov']
-  spec.email         = ['jjbohn@gmail.com', 'm0n9oose@gmail.com', 'artur.beljajev@internet.ee', 'maciej.szlosarczyk@eestiinternet.ee',
-    'sergei.tsoganov@internet.ee']
+  spec.authors       = ['John Bohn', 'Ilya Shcherbinin', 'Artur Beljajev',
+                        'Maciej Szlosarczyk',
+                        'Sergei Tsõganov']
+  spec.email         = ['jjbohn@gmail.com', 'm0n9oose@gmail.com', 'artur.beljajev@internet.ee',
+                        'maciej.szlosarczyk@eestiinternet.ee',
+                        'sergei.tsoganov@internet.ee']
   spec.summary       = 'TARA-Doku (https://github.com/e-gov/TARA-Doku) strategy for OmniAuth'
   spec.description   = 'TARA-Doku (https://github.com/e-gov/TARA-Doku) strategy for OmniAuth'
   spec.homepage      = 'https://github.com/internetee/omniauth-tara'

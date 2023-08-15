@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'openid_connect'
 
 module OmniAuth
@@ -14,7 +16,7 @@ module OmniAuth
         :email_verified,
         :phone_number,
         :phone_number_verified,
-        :profile_attributes,
+        :profile_attributes
       )
       alias subject sub
       alias subject= sub=
