@@ -47,6 +47,7 @@ jobs:
           gem install mocha
           gem install faker
           gem install minitest
+          gem install simplecov-lcov -v '~> 0.8'
           bundle install
           rake
 
