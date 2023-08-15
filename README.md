@@ -3,9 +3,8 @@
 Originally based on [omniauth_openid_connect](https://github.com/omniauth/omniauth_openid_connect),
 with parts rewritten to fit TARA-Doku protocol.
 
-I've forked this repository and launch as separate gem because maintaining of original was dropped.
-
-[![Build Status](https://travis-ci.org/internetee/omniauth-tara.svg?branch=master)](https://travis-ci.org/internetee/omniauth-tara)
+[![Build Status](https://github.com/internetee/omniauth-tara/actions/workflows/main.yml/badge.svg)](https://github.com/omniauth/omniauth_openid_connect/actions/workflows/main.yml)
+[![Coverage Status](https://coveralls.io/repos/github/internetee/omniauth-tara/badge.svg)](https://coveralls.io/github/internetee/omniauth-tara)
 
 ## Installation
 
