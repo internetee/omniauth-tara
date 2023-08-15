@@ -1,3 +1,4 @@
+
 name: Main
 on:
   push:
@@ -26,30 +27,9 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - name: config bundler
-        run:  |
-          bundle config set without 'development staging production'
-          bundle config set deployment '[secure]'
-          bundle env
-          head -n1 $(which bundle)
 
       - name: Run tests
-        env:
-          RAILS_ENV: test
-          DISABLE_SPRING: 1
-        run: |
-          gem install bundler -v '>= 2.2.10'
-          gem install simplecov -v '~> 0.21'
-          gem install builder
-          gem install omniauth -v '>= 1.9'
-          gem install openid_connect -v '~> 2.2'
-          gem install webmock
-          gem install mocha
-          gem install faker
-          gem install minitest
-          gem install simplecov-lcov -v '~> 0.8'
-          bundle install
-          rake
+        run: bundle exec rake
 
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
