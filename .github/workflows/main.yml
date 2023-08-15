@@ -40,6 +40,7 @@ jobs:
           gem install simplecov -v '~> 0.21'
           gem install builder
           gem install webmock
+          gem install mocha -v '~> 1.7'
           gem install minitest -v '~> 5.14'
           bundle install
           rake
