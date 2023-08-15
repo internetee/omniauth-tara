@@ -37,6 +37,7 @@ jobs:
       - name: Run tests
         run: |
           gem install bundler -v '>= 2.2.10'
+          gem install simplecov -v '~> 0.21'
           gem install builder
           gem install webmock
           gem install minitest -v '~> 5.14'
